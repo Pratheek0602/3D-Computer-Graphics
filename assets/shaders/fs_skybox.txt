@@ -1,0 +1,52 @@
+#version 330 core
+in vec3 texCoords;
+out vec4 fragColor;
+
+uniform sampler2D skyboxTextures[6];
+
+void main() {
+    vec3 abs_texCoords = abs(texCoords);
+    vec2 uv;
+    int face;
+    
+    // Determine which face of the cube we're on and calculate UV coordinates
+    if(abs_texCoords.x >= abs_texCoords.y && abs_texCoords.x >= abs_texCoords.z) {
+        // X face
+        if(texCoords.x > 0) {
+            // Positive X
+            uv = vec2(-texCoords.z, -texCoords.y) / abs_texCoords.x;
+            face = 0;
+        } else {
+            // Negative X
+            uv = vec2(texCoords.z, -texCoords.y) / abs_texCoords.x;
+            face = 1;
+        }
+    } else if(abs_texCoords.y >= abs_texCoords.x && abs_texCoords.y >= abs_texCoords.z) {
+        // Y face
+        if(texCoords.y > 0) {
+            // Positive Y
+            uv = vec2(texCoords.x, texCoords.z) / abs_texCoords.y;
+            face = 2;
+        } else {
+            // Negative Y
+            uv = vec2(texCoords.x, -texCoords.z) / abs_texCoords.y;
+            face = 3;
+        }
+    } else {
+        // Z face
+        if(texCoords.z > 0) {
+            // Positive Z
+            uv = vec2(texCoords.x, -texCoords.y) / abs_texCoords.z;
+            face = 4;
+        } else {
+            // Negative Z
+            uv = vec2(-texCoords.x, -texCoords.y) / abs_texCoords.z;
+            face = 5;
+        }
+    }
+    
+    // Convert from [-1,1] to [0,1]
+    uv = uv * 0.5 + 0.5;
+    
+    fragColor = texture(skyboxTextures[face], uv);
+}

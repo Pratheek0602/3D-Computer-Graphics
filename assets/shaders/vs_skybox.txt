@@ -1,0 +1,12 @@
+#version 330 core
+layout (location = 0) in vec3 position;
+
+out vec3 texCoords;
+
+uniform mat4 mvpMatrix;
+
+void main() {
+    texCoords = position;
+    vec4 pos = mvpMatrix * vec4(position, 1.0);
+    gl_Position = pos.xyww; // This ensures the skybox is always rendered at maximum depth
+}
