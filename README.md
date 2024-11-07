@@ -38,7 +38,7 @@ java Spacecraft
 ## Demo Video
 Watch the demo video showcasing the project in action:
 
-[Download Demo Video](./assets/video/demo.mp4)
+https://github.com/user-attachments/assets/f14eef5b-76cf-4252-ab63-10708d1aa1e7
 
 
 
